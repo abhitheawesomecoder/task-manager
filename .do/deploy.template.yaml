@@ -1,0 +1,12 @@
+spec:
+  name: task-manager
+  services:
+  - environment_slug: php
+    git:
+      branch: main
+      repo_clone_url: https://github.com/abhitheawesomecoder/task-manager.git
+    envs:
+    - key: APP_KEY
+      value: "base64:UdAH2B63rlotjrkSSsj3Hppy4gbfr+OeHvtSdF9r9q8="
+    name: task-manager
+    run_command: heroku-php-apache2 public/
