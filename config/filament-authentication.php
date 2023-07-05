@@ -3,12 +3,13 @@
 return [
     'models' => [
         'User'       => \App\Models\User::class,
-        'Role'       => \Spatie\Permission\Models\Role::class,
+        'Role'       => \App\Models\Role::class,
         'Permission' => \Spatie\Permission\Models\Permission::class,
     ],
     'resources'     => [
         'UserResource'       => \Phpsa\FilamentAuthentication\Resources\UserResource::class,
-        'RoleResource'       => \Phpsa\FilamentAuthentication\Resources\RoleResource::class,
+        //'RoleResource'       => \Phpsa\FilamentAuthentication\Resources\RoleResource::class,
+        'RoleResource'       => \App\Filament\Resources\RoleResource::class,
         'PermissionResource' => \Phpsa\FilamentAuthentication\Resources\PermissionResource::class,
     ],
     'pages'         => [
