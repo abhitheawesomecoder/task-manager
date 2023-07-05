@@ -42,6 +42,7 @@ class CreatePermissionTables extends Migration
             }
             $table->string('name');       // For MySQL 8.0 use string('name', 125);
             $table->string('guard_name'); // For MySQL 8.0 use string('guard_name', 125);
+            $table->nestedSet(); // added for role hierarchy 
             $table->timestamps();
             if ($teams || config('permission.testing')) {
                 $table->unique([$columnNames['team_foreign_key'], 'name', 'guard_name']);
@@ -135,6 +136,9 @@ class CreatePermissionTables extends Migration
         Schema::drop($tableNames['role_has_permissions']);
         Schema::drop($tableNames['model_has_roles']);
         Schema::drop($tableNames['model_has_permissions']);
+        Schema::table('roles', function (Blueprint $table) {
+            $table->dropNestedSet();
+        });
         Schema::drop($tableNames['roles']);
         Schema::drop($tableNames['permissions']);
     }
