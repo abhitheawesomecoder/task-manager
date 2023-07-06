@@ -13,6 +13,7 @@ use Filament\Tables;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -24,7 +25,7 @@ use Phpsa\FilamentAuthentication\Resources\RoleResource as NestedRoleResource;
 
 class RoleResource extends NestedRoleResource
 {
-    // protected static ?string $model = Role::class;
+    protected static ?string $model = Role::class;
 
     // protected static ?string $navigationIcon = 'heroicon-o-collection';
 
@@ -81,6 +82,28 @@ class RoleResource extends NestedRoleResource
     //             Tables\Actions\DeleteBulkAction::make(),
     //         ]);
     // }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('id')
+                    ->label('ID')
+                    ->searchable(),
+                TextColumn::make('name')
+                    ->label(strval(__('filament-authentication::filament-authentication.field.name')))
+                    ->searchable(),
+                TextColumn::make('parent.name')
+                    ->label(strval(__('filament-authentication::filament-authentication.field.parent')))
+                    ->searchable(),
+                TextColumn::make('guard_name')
+                    ->label(strval(__('filament-authentication::filament-authentication.field.guard_name')))
+                    ->searchable(),
+            ])
+            ->filters([
+                //
+            ]);
+    }
     
     // public static function getRelations(): array
     // {

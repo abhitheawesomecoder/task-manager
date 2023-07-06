@@ -7,7 +7,8 @@ return [
         'Permission' => \Spatie\Permission\Models\Permission::class,
     ],
     'resources'     => [
-        'UserResource'       => \Phpsa\FilamentAuthentication\Resources\UserResource::class,
+        //'UserResource'       => \Phpsa\FilamentAuthentication\Resources\UserResource::class,
+        'UserResource'       => \App\Filament\Resources\UserResource::class,
         //'RoleResource'       => \Phpsa\FilamentAuthentication\Resources\RoleResource::class,
         'RoleResource'       => \App\Filament\Resources\RoleResource::class,
         'PermissionResource' => \Phpsa\FilamentAuthentication\Resources\PermissionResource::class,
