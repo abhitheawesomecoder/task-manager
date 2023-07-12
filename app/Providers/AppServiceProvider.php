@@ -3,6 +3,11 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Filament\Pages\Settings;
+use App\Filament\Resources\UserResource;
+use Filament\Facades\Filament;
+use Filament\Navigation\NavigationBuilder;
+use Filament\Navigation\NavigationItem;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Filament::navigation(function (NavigationBuilder $builder): NavigationBuilder {
+        //     return $builder->items([
+        //         NavigationItem::make('Roles')->icon('heroicon-o-home')
+        //     ]);
+        // });
     }
 }

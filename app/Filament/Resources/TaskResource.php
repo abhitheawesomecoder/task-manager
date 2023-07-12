@@ -31,12 +31,12 @@ class TaskResource extends Resource
                 // Forms\Components\TextInput::make('user_id')
                 //     ->required(),
                 Select::make('role_id')
-                    ->label('User')
+                    ->label('Role')
                     ->options(Role::all()->pluck('name', 'id'))
                     ->searchable(),
                 Forms\Components\Textarea::make('description'),
-                // Forms\Components\Toggle::make('done')
-                //     ->required(),
+                Forms\Components\Toggle::make('done')
+                    ->required(),
                 
             ]);
     }
@@ -46,7 +46,7 @@ class TaskResource extends Resource
      // if role not admin then show his assigned task all all his childrens task
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('role_id'),
+                Tables\Columns\TextColumn::make('role.name'),
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('description'),
                 Tables\Columns\IconColumn::make('done')

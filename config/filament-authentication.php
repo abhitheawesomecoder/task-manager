@@ -18,7 +18,7 @@ return [
     ],
     'Widgets'       => [
         'LatestUsers' => [
-            'enabled' => true,
+            'enabled' => false,
             'limit'   => 5,
             'sort'    => 0,
             'paginate' => false
