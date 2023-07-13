@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->longText('description')->nullable();
             $table->boolean('done')->default(false);
+            $table->date('deadline');
+            $table->string('priority'); //high medium low
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('role_id')->constrained()->cascadeOnDelete();
             $table->timestamps();

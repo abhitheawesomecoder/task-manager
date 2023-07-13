@@ -35,6 +35,17 @@ class TaskResource extends Resource
                     ->required()
                     ->options(User::all()->pluck('name', 'id'))
                     ->searchable(),
+                Forms\Components\DatePicker::make('deadline')
+                ->label('Target Date')
+                ->default(now())
+                ->required(),
+                Select::make('priority')
+                ->default('Medium')
+                ->options([
+                    'High' => 'High',
+                    'Medium' => 'Medium',
+                    'Low' => 'Low',
+                ]),
                 Forms\Components\Textarea::make('description'),
                 Forms\Components\Toggle::make('done')
                     ->required(),
@@ -47,7 +58,7 @@ class TaskResource extends Resource
      // if role not admin then show his assigned task all all his childrens task
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('role.name'),
+                Tables\Columns\TextColumn::make('user.name'),
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('description'),
                 Tables\Columns\IconColumn::make('done')
