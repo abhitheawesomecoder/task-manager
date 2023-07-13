@@ -60,13 +60,12 @@ class TaskResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('user.name'),
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('description'),
+              //  Tables\Columns\TextColumn::make('description'),
                 Tables\Columns\IconColumn::make('done')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+                Tables\Columns\TextColumn::make('priority'),
+                Tables\Columns\TextColumn::make('deadline')->dateTime(),
+                Tables\Columns\TextColumn::make('updated_at')->dateTime(),
             ])
             ->filters([
                 // Tables\Filters\Filter::make('sub_task')
