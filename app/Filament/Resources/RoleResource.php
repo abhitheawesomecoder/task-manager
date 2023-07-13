@@ -54,6 +54,7 @@ class RoleResource extends NestedRoleResource
                                     ->default(config('auth.defaults.guard')),
                                 Select::make('parent_id')
                                     ->label('Parent')
+                                    ->required()
                                     ->options(Role::all()->pluck('name', 'id'))
                                     ->searchable()
                                 // BelongsToManyMultiSelect::make('permissions')

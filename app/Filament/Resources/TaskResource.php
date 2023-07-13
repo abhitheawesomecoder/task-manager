@@ -32,6 +32,7 @@ class TaskResource extends Resource
                 //     ->required(),
                 Select::make('role_id')
                     ->label('Role')
+                    ->required()
                     ->options(Role::all()->pluck('name', 'id'))
                     ->searchable(),
                 Forms\Components\Textarea::make('description'),
