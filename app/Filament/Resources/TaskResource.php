@@ -5,7 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\TaskResource\Pages;
 use App\Filament\Resources\TaskResource\RelationManagers;
 use App\Models\Task;
-use App\Models\Role;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -30,10 +30,10 @@ class TaskResource extends Resource
                     ->maxLength(255),
                 // Forms\Components\TextInput::make('user_id')
                 //     ->required(),
-                Select::make('role_id')
-                    ->label('Role')
+                Select::make('user_id')
+                    ->label('User')
                     ->required()
-                    ->options(Role::all()->pluck('name', 'id'))
+                    ->options(User::all()->pluck('name', 'id'))
                     ->searchable(),
                 Forms\Components\Textarea::make('description'),
                 Forms\Components\Toggle::make('done')
