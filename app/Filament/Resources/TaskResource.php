@@ -14,6 +14,7 @@ use Filament\Tables;
 use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 
 class TaskResource extends Resource
 {
@@ -46,6 +47,15 @@ class TaskResource extends Resource
                     'Medium' => 'Medium',
                     'Low' => 'Low',
                 ]),
+                Forms\Components\Section::make('Images')
+                ->schema([
+                    SpatieMediaLibraryFileUpload::make('media')
+                        ->collection('task-images')
+                        ->multiple()
+                        ->maxFiles(5)
+                        ->disableLabel(),
+                ])
+                ->collapsible(),
                 Forms\Components\Textarea::make('description'),
                 Forms\Components\Toggle::make('done')
                     ->required(),
@@ -60,7 +70,6 @@ class TaskResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('user.name'),
                 Tables\Columns\TextColumn::make('name'),
-              //  Tables\Columns\TextColumn::make('description'),
                 Tables\Columns\IconColumn::make('done')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('priority'),
@@ -68,9 +77,13 @@ class TaskResource extends Resource
                 Tables\Columns\TextColumn::make('updated_at')->dateTime(),
             ])
             ->filters([
-                // Tables\Filters\Filter::make('sub_task')
-                //     ->query(fn (Builder $query): Builder => $query->whereIn('role_id',\Auth::user()->roles()->first()->descendants->pluck('id')->toArray())),
-                // ...
+                Tables\Filters\SelectFilter::make('priority')
+                ->multiple()
+                ->options([
+                    'High' => 'High',
+                    'Medium' => 'Medium',
+                    'Low' => 'Low',
+                ])
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

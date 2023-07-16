@@ -21,6 +21,9 @@ class ListTasks extends ListRecords
 
     protected function getTableQuery(): Builder
     {
-        return static::getResource()::getEloquentQuery()->whereIn('role_id',\Auth::user()->roles()->first()->descendants->pluck('id')->toArray())->orWhere('role_id',\Auth::user()->roles()->first()->id);
+        $user_role_id = \Auth::user()->roles()->first()->id;
+        $subordinates_role_id = \Auth::user()->roles()->first()->descendants->pluck('id')->toArray();
+        array_push($subordinates_role_id,$user_role_id);
+        return static::getResource()::getEloquentQuery()->whereIn('role_id',$subordinates_role_id);
     }
 }
