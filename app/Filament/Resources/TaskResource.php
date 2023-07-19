@@ -97,7 +97,7 @@ class TaskResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\CommentsRelationManager::class,
         ];
     }
     
@@ -109,5 +109,6 @@ class TaskResource extends Resource
             'view' => Pages\ViewTask::route('/{record}'),
             'edit' => Pages\EditTask::route('/{record}/edit'),
         ];
-    }    
+    }
+        
 }
