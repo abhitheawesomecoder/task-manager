@@ -83,7 +83,8 @@ class TaskResource extends Resource
                         $record->review_requested_by = NULL;
                         $record->save();
                     }
-                })
+                }),
+                Tables\Columns\TextColumn::make('requested_by.name')
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('priority')

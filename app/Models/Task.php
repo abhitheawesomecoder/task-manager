@@ -26,6 +26,11 @@ class Task extends Model implements HasMedia
         return $this->belongsTo(User::class);
     }
 
+    public function requested_by(): BelongsTo
+    {
+        return $this->belongsTo(User::class,'review_requested_by');
+    }
+
     public function comments(): MorphMany
     {
         return $this->morphMany(Comment::class, 'commentable');
