@@ -74,7 +74,7 @@ class TaskResource extends Resource
                     ->boolean(),
                 Tables\Columns\TextColumn::make('priority'),
                 Tables\Columns\TextColumn::make('deadline')->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')->dateTime(),
+                //Tables\Columns\TextColumn::make('updated_at')->dateTime(),
                 Tables\Columns\ToggleColumn::make('review')->updateStateUsing(function ($state, $record) {
                     if ( $state == 1) {
                         $record->review_requested_by = auth()->id();
