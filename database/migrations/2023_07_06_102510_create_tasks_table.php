@@ -18,6 +18,8 @@ return new class extends Migration
             $table->boolean('done')->default(false);
             $table->date('deadline');
             $table->string('priority'); //High Medium Low
+            $table->boolean('review')->default(false);
+            $table->foreignId('review_requested_by')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('role_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
