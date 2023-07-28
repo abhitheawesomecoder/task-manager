@@ -77,9 +77,11 @@ class TaskResource extends Resource
                 //Tables\Columns\TextColumn::make('updated_at')->dateTime(),
                 Tables\Columns\ToggleColumn::make('review')->updateStateUsing(function ($state, $record) {
                     if ( $state == 1) {
+                        $record->review = true;
                         $record->review_requested_by = auth()->id();
                         $record->save();
                     } else {
+                        $record->review = false;
                         $record->review_requested_by = NULL;
                         $record->save();
                     }
