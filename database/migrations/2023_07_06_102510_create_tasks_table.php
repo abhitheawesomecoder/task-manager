@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->longText('description')->nullable();
             $table->boolean('done')->default(false);
+            $table->date('done_date')->nullable();
             $table->date('deadline');
             $table->string('priority'); //High Medium Low
             $table->boolean('review')->default(false);

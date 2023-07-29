@@ -17,4 +17,16 @@ class EditTask extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    public function afterSave(): void
+    {
+        if ($this->record->done) {
+             $this->record->done_date = \Carbon\Carbon::now();
+             $this->record->save();
+        }else{
+            $this->record->done_date = null;
+            $this->record->save();
+        }
+
+    }
 }

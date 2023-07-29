@@ -28,11 +28,30 @@ class ListTasks extends ListRecords
         return static::getResource()::getEloquentQuery()->whereIn('role_id',$subordinates_role_id);
     }
 
+    // protected function getTableRecordClassesUsing(): ?Closure
+    // {
+    //     return fn (Task $record) => match (\Carbon\Carbon::now()->startOfDay()->gte($record->deadline)) {
+    //         true => 'opacity-70',
+    //         default => null,
+    //     };
+    // }
+
     protected function getTableRecordClassesUsing(): ?Closure
     {
-        return fn (Task $record) => match (\Carbon\Carbon::now()->startOfDay()->gte($record->deadline)) {
-            true => 'opacity-70',
-            default => null,
+        return function (Task $record) {
+
+            if($record->done){
+                return match (\Carbon\Carbon::parse($record->done_date)->gt($record->deadline)) {
+                    true => 'opacity-70',
+                    default => null,
+                };
+            }else{
+                return match (\Carbon\Carbon::now()->startOfDay()->gt($record->deadline)) {
+                    true => 'opacity-70',
+                    default => null,
+                };
+            }
+
         };
     }
 }
