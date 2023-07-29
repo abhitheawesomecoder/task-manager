@@ -15,6 +15,7 @@ use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
 
 class TaskResource extends Resource
 {
@@ -116,6 +117,7 @@ class TaskResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
+                FilamentExportBulkAction::make('export')
             ]);
     }
     
