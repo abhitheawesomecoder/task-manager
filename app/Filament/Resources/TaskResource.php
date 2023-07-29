@@ -64,7 +64,21 @@ class TaskResource extends Resource
     }
 
     public static function table(Table $table): Table
-    {// if role admin then show all tasks
+    {
+        $filterArray = [
+            Tables\Filters\SelectFilter::make('priority')
+            ->multiple()
+            ->options([
+                'High' => 'High',
+                'Medium' => 'Medium',
+                'Low' => 'Low',
+            ])
+        ];
+
+        if(auth()->user()->can('tasks.filter.user') || auth()->user()->can('authentication'))
+          array_push($filterArray,Tables\Filters\SelectFilter::make('user')->relationship('user', 'name'));
+        
+     // if role admin then show all tasks
      // if role not admin then show his assigned task all all his childrens task
         return $table
             ->columns([
@@ -89,16 +103,7 @@ class TaskResource extends Resource
                 }),
                 Tables\Columns\TextColumn::make('requested_by.name')
             ])
-            ->filters([
-                Tables\Filters\SelectFilter::make('priority')
-                ->multiple()
-                ->options([
-                    'High' => 'High',
-                    'Medium' => 'Medium',
-                    'Low' => 'Low',
-                ]),
-                Tables\Filters\SelectFilter::make('user')->relationship('user', 'name')
-            ])
+            ->filters($filterArray)
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
