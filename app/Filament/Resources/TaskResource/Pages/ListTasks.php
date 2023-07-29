@@ -35,7 +35,6 @@ class ListTasks extends ListRecords
     //         default => null,
     //     };
     // }
-
     protected function getTableRecordClassesUsing(): ?Closure
     {
         return function (Task $record) {
