@@ -96,7 +96,8 @@ class TaskResource extends Resource
                     'High' => 'High',
                     'Medium' => 'Medium',
                     'Low' => 'Low',
-                ])
+                ]),
+                Tables\Filters\SelectFilter::make('user')->relationship('user', 'name')
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
