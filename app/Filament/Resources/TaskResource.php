@@ -72,7 +72,13 @@ class TaskResource extends Resource
                 'High' => 'High',
                 'Medium' => 'Medium',
                 'Low' => 'Low',
-            ])
+            ]),
+            Tables\Filters\Filter::make('done')
+            ->label('Deadline miss')
+            ->query(fn (Builder $query): Builder => $query->where('done', true)->where('done_date','>','deadline')->orWhere(function (Builder $query) {
+                $query->where('done', false)
+                      ->whereDate('deadline' , '<',\Carbon\Carbon::now()->startOfDay() );
+            }))
         ];
 
         if(auth()->user()->can('tasks.filter.user') || auth()->user()->can('authentication'))
