@@ -117,7 +117,7 @@ class TaskResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-                FilamentExportBulkAction::make('export')
+                FilamentExportBulkAction::make('export')->withColumns([Tables\Columns\TextColumn::make('description')])
             ]);
     }
     
