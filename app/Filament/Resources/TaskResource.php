@@ -11,6 +11,8 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Carbon\Carbon;
+use Webbingbrasil\FilamentDateFilter\DateFilter;
 use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -78,8 +80,16 @@ class TaskResource extends Resource
             ->label('Deadline miss')
             ->query(fn (Builder $query): Builder => $query->where('done', true)->where('done_date','<','deadline')->orWhere(function (Builder $query) {
                 $query->where('done', false)
-                      ->whereDate('deadline' , '<',\Carbon\Carbon::now()->startOfDay() );
-            }))
+                      ->whereDate('deadline' , '<',Carbon::now()->startOfDay() );
+            })),
+            DateFilter::make('deadline')
+            ->label(__('Deadline'))
+            ->minDate(Carbon::today()->subMonth(1))
+            ->maxDate(Carbon::today()->addMonth(1))
+            ->timeZone('Asia/Kolkata')
+            ->range()
+            ->fromLabel(__('From'))
+            ->untilLabel(__('Until'))
         ];
 
         if(auth()->user()->can('tasks.filter.user') || auth()->user()->can('authentication'))
