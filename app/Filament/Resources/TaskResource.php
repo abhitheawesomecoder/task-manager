@@ -93,7 +93,7 @@ class TaskResource extends Resource
         ];
 
         if(auth()->user()->can('tasks.filter.user') || auth()->user()->can('authentication'))
-          array_push($filterArray,Tables\Filters\SelectFilter::make('user')->relationship('user', 'name'));
+        array_unshift($filterArray,Tables\Filters\SelectFilter::make('user')->relationship('user', 'name'));
         
      // if role admin then show all tasks
      // if role not admin then show his assigned task all all his childrens task
