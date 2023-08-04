@@ -25,7 +25,7 @@ class ListTasks extends ListRecords
         $user_role_id = \Auth::user()->roles()->first()->id;
         $subordinates_role_id = \Auth::user()->roles()->first()->descendants->pluck('id')->toArray();
         array_push($subordinates_role_id,$user_role_id);
-        return static::getResource()::getEloquentQuery()->whereIn('role_id',$subordinates_role_id);
+        return static::getResource()::getEloquentQuery()->whereIn('role_id',$subordinates_role_id)->where('review',false);
     }
 
     // protected function getTableRecordClassesUsing(): ?Closure
