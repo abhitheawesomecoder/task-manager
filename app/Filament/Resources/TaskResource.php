@@ -100,9 +100,11 @@ class TaskResource extends Resource
 
         if(auth()->user()->can('tasks.filter.user') || auth()->user()->can('authentication')){
             array_unshift($filterArray,Tables\Filters\SelectFilter::make('user')->relationship('user', 'name'));
+
             array_unshift($bulkAction,Tables\Actions\BulkAction::make('done')
-            ->action(fn (Collection $records) => $records->each->update(['done' => true, 'done_date' => \Carbon\Carbon::now()]))
-            ->deselectRecordsAfterCompletion());
+            ->action(fn (Collection $records) => $records->where('done',false)->each->update(['done' => true, 'done_date' => \Carbon\Carbon::now()]))
+            ->deselectRecordsAfterCompletion()
+            ->icon('heroicon-o-check-circle'));
         }
         array_unshift($filterArray,Tables\Filters\SelectFilter::make('user')->relationship('user', 'name'));
         
