@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Webbingbrasil\FilamentDateFilter\DateFilter;
 use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Builder;
@@ -92,7 +93,17 @@ class TaskResource extends Resource
             ->untilLabel(__('Until'))
         ];
 
-        if(auth()->user()->can('tasks.filter.user') || auth()->user()->can('authentication'))
+        $bulkAction = [
+            Tables\Actions\DeleteBulkAction::make(),
+            FilamentExportBulkAction::make('export')->withColumns([Tables\Columns\TextColumn::make('description')])
+        ];
+
+        if(auth()->user()->can('tasks.filter.user') || auth()->user()->can('authentication')){
+            array_unshift($filterArray,Tables\Filters\SelectFilter::make('user')->relationship('user', 'name'));
+            array_unshift($bulkAction,Tables\Actions\BulkAction::make('done')
+            ->action(fn (Collection $records) => $records->each->update(['done' => true, 'done_date' => \Carbon\Carbon::now()]))
+            ->deselectRecordsAfterCompletion());
+        }
         array_unshift($filterArray,Tables\Filters\SelectFilter::make('user')->relationship('user', 'name'));
         
      // if role admin then show all tasks
@@ -125,10 +136,7 @@ class TaskResource extends Resource
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
-            ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
-                FilamentExportBulkAction::make('export')->withColumns([Tables\Columns\TextColumn::make('description')])
-            ]);
+            ->bulkActions($bulkAction);
     }
     
     public static function getRelations(): array
