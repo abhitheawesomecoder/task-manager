@@ -8,6 +8,7 @@ use Filament\Resources\Pages\ListRecords;
 use App\Models\Task;
 use Illuminate\Database\Eloquent\Builder;
 use Closure;
+use App\Settings\FilterSettings;
 
 class ListTasks extends ListRecords
 {
@@ -20,21 +21,23 @@ class ListTasks extends ListRecords
         ];
     }
 
-    protected function getTableQuery(): Builder
+    protected function baseTableQuery(): Builder
     {
         $user_role_id = \Auth::user()->roles()->first()->id;
         $subordinates_role_id = \Auth::user()->roles()->first()->descendants->pluck('id')->toArray();
         array_push($subordinates_role_id,$user_role_id);
-        return static::getResource()::getEloquentQuery()->whereIn('role_id',$subordinates_role_id)->where('review',false);
+        $user_id = app(FilterSettings::class)->user_id;
+        if($user_id)
+            return static::getResource()::getEloquentQuery()->whereIn('role_id',$subordinates_role_id)->where('user_id',$user_id);
+        else
+            return static::getResource()::getEloquentQuery()->whereIn('role_id',$subordinates_role_id);
     }
 
-    // protected function getTableRecordClassesUsing(): ?Closure
-    // {
-    //     return fn (Task $record) => match (\Carbon\Carbon::now()->startOfDay()->gte($record->deadline)) {
-    //         true => 'opacity-70',
-    //         default => null,
-    //     };
-    // }
+    protected function getTableQuery(): Builder
+    {
+        return $this->baseTableQuery()->where('review',false);
+    }
+
     protected function getTableRecordClassesUsing(): ?Closure
     {
         return function (Task $record) {

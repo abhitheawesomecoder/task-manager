@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Carbon\Carbon;
+use App\Settings\FilterSettings;
 use Illuminate\Database\Eloquent\Collection;
 use Webbingbrasil\FilamentDateFilter\DateFilter;
 use Filament\Forms\Components\Select;
@@ -99,14 +100,15 @@ class TaskResource extends Resource
         ];
 
         if(auth()->user()->can('tasks.filter.user') || auth()->user()->can('authentication')){
-            array_unshift($filterArray,Tables\Filters\SelectFilter::make('user')->relationship('user', 'name'));
+            $user_id = app(FilterSettings::class)->user_id;
+            if(!$user_id)// to check if manage user filter is set or not
+                array_unshift($filterArray,Tables\Filters\SelectFilter::make('user')->relationship('user', 'name'));
 
             array_unshift($bulkAction,Tables\Actions\BulkAction::make('done')
             ->action(fn (Collection $records) => $records->where('done',false)->each->update(['done' => true, 'done_date' => \Carbon\Carbon::now()]))
             ->deselectRecordsAfterCompletion()
             ->icon('heroicon-o-check-circle'));
         }
-        array_unshift($filterArray,Tables\Filters\SelectFilter::make('user')->relationship('user', 'name'));
         
      // if role admin then show all tasks
      // if role not admin then show his assigned task all all his childrens task
