@@ -8,4 +8,12 @@ return new class extends SettingsMigration
     {
         $this->migrator->add('general.user_id', NULL);
     }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        $this->migrator->delete('general.user_id');
+    }
 };
