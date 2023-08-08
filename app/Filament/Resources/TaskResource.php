@@ -6,6 +6,7 @@ use App\Filament\Resources\TaskResource\Pages;
 use App\Filament\Resources\TaskResource\RelationManagers;
 use App\Models\Task;
 use App\Models\User;
+use App\Models\Filter;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -100,7 +101,8 @@ class TaskResource extends Resource
         ];
 
         if(auth()->user()->can('tasks.filter.user') || auth()->user()->can('authentication')){
-            $user_id = app(FilterSettings::class)->user_id;
+            $filter = Filter::where('name','user_id')->first()->values->where('user_id',auth()->user()->id)->first();
+            $user_id = intval($filter->payload);
             if(!$user_id)// to check if manage user filter is set or not
                 array_unshift($filterArray,Tables\Filters\SelectFilter::make('user')->relationship('user', 'name'));
 

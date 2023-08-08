@@ -6,6 +6,7 @@ use App\Filament\Resources\TaskResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
 use App\Models\Task;
+use App\Models\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Closure;
 use App\Settings\FilterSettings;
@@ -26,7 +27,8 @@ class ListTasks extends ListRecords
         $user_role_id = \Auth::user()->roles()->first()->id;
         $subordinates_role_id = \Auth::user()->roles()->first()->descendants->pluck('id')->toArray();
         array_push($subordinates_role_id,$user_role_id);
-        $user_id = app(FilterSettings::class)->user_id;
+        $filter = Filter::where('name','user_id')->first()->values->where('user_id',auth()->user()->id)->first();
+        $user_id = intval($filter->payload);
         if($user_id)
             return static::getResource()::getEloquentQuery()->whereIn('role_id',$subordinates_role_id)->where('user_id',$user_id);
         else
