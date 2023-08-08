@@ -2,10 +2,10 @@
 
 namespace App\Filament\Pages;
 
-use App\Settings\FilterSettings;
 use Filament\Forms;
 use App\Models\User;
 use Filament\Pages\SettingsPage;
+use App\Settings\FilterSettings;
 
 class ManageFilter extends SettingsPage
 {

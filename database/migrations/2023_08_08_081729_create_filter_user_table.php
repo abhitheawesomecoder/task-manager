@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('filters', function (Blueprint $table) {
+        Schema::create('filter_user', function (Blueprint $table) {
             $table->id();
-            
-            $table->string('group');
-            $table->string('name');
-            $table->boolean('locked')->default(false);
+            $table->json('payload');
+            $table->foreignId('filter_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
-
-            $table->unique(['group', 'name']);
         });
     }
 
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('filters');
+        Schema::dropIfExists('filter_user');
     }
 };
