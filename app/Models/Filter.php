@@ -10,6 +10,8 @@ class Filter extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function values(): HasMany
     {
         return $this->hasMany(FilterUser::class);

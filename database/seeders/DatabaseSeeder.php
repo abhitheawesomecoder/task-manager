@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Filter;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 
@@ -36,7 +37,7 @@ class DatabaseSeeder extends Seeder
 
         // DB::table('model_has_roles')->insert(['role_id' => 1,'model_type' => 'App\\Models\\User','model_id' => 1]);
         // DB::table('role_has_permissions')->insert(['permission_id' => 1,'role_id' => 1]);
-        DB::table('filters')->insert(['group' => 'general','name' => 'user_id', 'locked' => 0]);
+        Filter::create(['group' => 'general','name' => 'user_id', 'locked' => 0]);
 
 
 
