@@ -28,9 +28,10 @@ class ListTasks extends ListRecords
         $subordinates_role_id = \Auth::user()->roles()->first()->descendants->pluck('id')->toArray();
         array_push($subordinates_role_id,$user_role_id);
         $filter = Filter::where('name','user_id')->first()->values->where('user_id',auth()->user()->id)->first();
-        $user_id = intval($filter->payload);
-        if($user_id)
+        if($filter){
+            $user_id = intval($filter->payload);
             return static::getResource()::getEloquentQuery()->whereIn('role_id',$subordinates_role_id)->where('user_id',$user_id);
+        }
         else
             return static::getResource()::getEloquentQuery()->whereIn('role_id',$subordinates_role_id);
     }

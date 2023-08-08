@@ -101,9 +101,10 @@ class TaskResource extends Resource
         ];
 
         if(auth()->user()->can('tasks.filter.user') || auth()->user()->can('authentication')){
+
             $filter = Filter::where('name','user_id')->first()->values->where('user_id',auth()->user()->id)->first();
-            $user_id = intval($filter->payload);
-            if(!$user_id)// to check if manage user filter is set or not
+            
+            if(!$filter)// to check if manage user filter is set or not
                 array_unshift($filterArray,Tables\Filters\SelectFilter::make('user')->relationship('user', 'name'));
 
             array_unshift($bulkAction,Tables\Actions\BulkAction::make('done')
