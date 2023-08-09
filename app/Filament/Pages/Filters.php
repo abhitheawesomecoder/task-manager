@@ -75,7 +75,10 @@ class Filters extends Page implements HasFormActions
 
         foreach ($settingnames as $settingname) {
             $filter = Filter::where('name',$settingname)->first();
-            $update = FilterUser::updateOrCreate(['user_id' => auth()->user()->id,'filter_id' => $filter->id],['payload' => $data[$settingname]]);
+            if($data[$settingname])
+                $update = FilterUser::updateOrCreate(['user_id' => auth()->user()->id,'filter_id' => $filter->id],['payload' => $data[$settingname]]);
+            else 
+                $deleted = FilterUser::where('user_id', auth()->user()->id)->where('filter_id', $filter->id)->delete();
         }
 
         $this->callHook('afterSave');
