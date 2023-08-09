@@ -12,8 +12,8 @@ class StatsOverview extends BaseWidget
     {
         return [
             Card::make('Tasks Pending', Task::where('review',false)->count()),
-            Card::make('Tasks Done', Task::where('review',true)->where('done',true)->count()),
-            Card::make('Tasks for Review', Task::where('done',true)->count()),
+            Card::make('Tasks Done', Task::where('done',true)->count()),
+            Card::make('Tasks for Review', Task::where('review',true)->where('done',false)->count()),
         ];
     }
 }
