@@ -22,7 +22,7 @@ return [
             'limit'   => 5,
             'sort'    => 0,
             'paginate' => false
-        ],
+        ]
     ],
     'preload_roles' => true,
     'impersonate'   => [

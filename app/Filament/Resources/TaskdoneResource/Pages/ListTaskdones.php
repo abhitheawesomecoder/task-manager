@@ -9,6 +9,6 @@ class ListTaskdones extends ListTasks
 {
     protected function getTableQuery(): Builder
     {
-        return $this->baseTableQuery()->where('review',true)->where('done',true);
+        return $this->baseTableQuery()->where('done',true);
     }
 }
