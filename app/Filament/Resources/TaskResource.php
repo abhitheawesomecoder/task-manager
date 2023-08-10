@@ -35,8 +35,6 @@ class TaskResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                // Forms\Components\TextInput::make('user_id')
-                //     ->required(),
                 Select::make('user_id')
                     ->label('User')
                     ->required()

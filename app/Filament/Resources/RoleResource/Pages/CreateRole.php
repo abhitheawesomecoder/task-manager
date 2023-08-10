@@ -11,7 +11,6 @@ use Phpsa\FilamentAuthentication\Resources\RoleResource\Pages\CreateRole as Nest
 
 class CreateRole extends NestedCreateRole
 {
-    //protected static string $resource = RoleResource::class;
     protected function handleRecordCreation(array $data): Model
     {
 
@@ -22,7 +21,5 @@ class CreateRole extends NestedCreateRole
             return Role::create($data, $parent_node);
         }else
           return Role::create($data);
-        //dd($parent_node);
-        //return static::getModel()::create($data, $parent_node);
     }
 }

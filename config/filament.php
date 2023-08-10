@@ -148,7 +148,6 @@ return [
         'path' => app_path('Filament/Widgets'),
         'register' => [
             Widgets\AccountWidget::class,
-            //Widgets\FilamentInfoWidget::class,
         ],
     ],
 
@@ -207,13 +206,6 @@ return [
     */
 
     'broadcasting' => [
-
-        // 'echo' => [
-        //     'broadcaster' => 'pusher',
-        //     'key' => env('VITE_PUSHER_APP_KEY'),
-        //     'cluster' => env('VITE_PUSHER_APP_CLUSTER'),
-        //     'forceTLS' => true,
-        // ],
 
     ],
 

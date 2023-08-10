@@ -24,10 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Filament::navigation(function (NavigationBuilder $builder): NavigationBuilder {
-        //     return $builder->items([
-        //         NavigationItem::make('Roles')->icon('heroicon-o-home')
-        //     ]);
-        // });
+
     }
 }
