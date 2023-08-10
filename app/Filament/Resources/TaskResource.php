@@ -122,7 +122,6 @@ class TaskResource extends Resource
                 Tables\Columns\TextColumn::make('priority'),
                 Tables\Columns\TextColumn::make('deadline')->date(),
                 Tables\Columns\TextColumn::make('done_date')->date(),
-                //Tables\Columns\TextColumn::make('updated_at')->dateTime(),
                 Tables\Columns\ToggleColumn::make('review')->updateStateUsing(function ($state, $record) {
                     if ( $state == 1) {
                         $record->review = true;
